@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../style.css">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+	<title>Jack's Website! - Settings</title>
+</head>
+<body>
+<div id="sidemenu">
+	<a href="../index.html">Home</a>
+	<a href="aboutme.html">About Me</a>
+	<a href="photography.html">Pictures</a>
+	<a href="settings.html">Settings</a>
+	<header>
+		<h1>Settings!</h1>
+	</header>
+	<section id="settings">
+		<label>
+			Dark mode:
+			<input type="checkbox" id="dark-mode-toggle">
+		</label>
+	</section>
+<script>
+const body = document.body;
+const darkToggle = document.getElementById('dark-mode-toggle');
+const savedTheme = localStorage.getItem('theme') || 'light';
+body.classList.add(savedTheme);
+darkToggle.checked = savedTheme === 'dark';
+darkToggle.addEventListener('change', () => {
+	body.classList.remove('light', 'dark');
+	const theme = darkToggle.checked ? 'dark' : 'light';
+	body.classList.add(theme);
+	localStorage.setItem('theme', theme);
+});
+</script>
+</body>
+</html>
