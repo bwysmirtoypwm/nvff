@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="../darkmode.js"></script>
-
+	<script>
+		const savedTheme = localStorage.getItem('theme');
+		if (savedTheme) {
+			document.documentElement.classList.add(savedTheme);
+		}
+	</script>
 	<link rel="stylesheet" href="../style.css">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,6 +37,24 @@
 		<p>This is a long exposure photograph that I captured using the pro mode on my Samsung Galaxy S21. I don't remeber what I pointed the camera at, but really just set the shutter speed and iso suuuper low, point the camera at any bright lights, click the shutter button, then shake the camera round.</p>
 			<a href="../images/photos/longexposure1.jpg" target="_blank"><img src="../images/photos/longexposure1.jpg" width="400"></a>
 	</article>
+	<footer>
+		<h3>Some socials!</h3>
+		<p>
+			<a href="https://github.com/bwysmirtoypwm" target="_blank">
+				<img src="../images/social-icons/github.svg" width="40">
+			</a>
+			<a href="https://www.youtube.com/@nvf.f" target="_blank">
+				<img src="../images/social-icons/youtube.svg" width="40">
+			</a>
+			<a href="https://open.spotify.com/user/312tzibntiimhsxkcze7uaqykm3e" target="_blank">
+				<img src="../images/social-icons/spotify.svg" width="40">
+			</a>
+			<a href="https://vrchat.com/home/user/usr_d130e8f3-3bb1-44ef-868c-6b61ceef7abd" target="_blank">
+				<img src="../images/social-icons/vrchat.svg" width="40">
+			</a>
+ 		</p>
+	</footer>
+<script src="../darkmode.js"></script>
 </body>
 
 </html>
