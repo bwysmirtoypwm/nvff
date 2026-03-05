@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="../darkmode.js"></script>
-
+	<script>
+		const savedTheme = localStorage.getItem('theme');
+		if (savedTheme) {
+			document.documentElement.classList.add(savedTheme);
+		}
+	</script>
 	<link rel="stylesheet" href="../style.css">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,6 +28,24 @@
 			<p>Hello!! this is the “about me “ part of my website. My name is Jack. I have kinda been programming on and off for several years, and recently decided I wanted to actually make a website of my own. (though a simple one, as I fell into vibe-coding for awhile...) anyway, I have many interests like computers, music production (that is also something I haven't done much with, I’ve never made any full songs... hopefully I will in the future? for now I’m going to focus on re-learning programming). some other interests are VR, (I have an Oculus Quest 2), annnnd well…. I can’t really think of much else right now…. I guess I’ll update this in the future. Anyway, I love listening to music. One of my favorite artists is Jogging House, who makes really nice, calming music. I have their Spotify embedded below. I Promise I will add more artists in the future, but this is all I will do for now. Thank you for reading!</p>
 	</section>
 	<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/artist/250gyZr9YqxIpI3UNi9yka?utm_source=generator" width="400" height="250" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+<footer>
+		<h3>Some socials!</h3>
+		<p>
+			<a href="https://github.com/bwysmirtoypwm" target="_blank">
+				<img src="../images/social-icons/github.svg" width="40">
+			</a>
+			<a href="https://www.youtube.com/@nvf.f" target="_blank">
+				<img src="../images/social-icons/youtube.svg" width="40">
+			</a>
+			<a href="https://open.spotify.com/user/312tzibntiimhsxkcze7uaqykm3e" target="_blank">
+				<img src="../images/social-icons/spotify.svg" width="40">
+			</a>
+			<a href="https://vrchat.com/home/user/usr_d130e8f3-3bb1-44ef-868c-6b61ceef7abd" target="_blank">
+				<img src="../images/social-icons/vrchat.svg" width="40">
+			</a>
+ 		</p>
+	</footer>
+<script src="../darkmode.js"></script>
 </body>
 </html>
 
