@@ -55,21 +55,28 @@ body {
 	background-color: #CFCFCF;
 	margin: 30px 0;
 }
-body.light {
+html.light {
 	background-color: white;
 	color: black;
 }
-body.dark {
-	background-color: #121212
+html.dark {
+	background-color: #121212;
 	color: #eee;
 }
-body.dark #updates,
-body.dark #aboutme,
-body.dark #photos,
-body.dark #settings {
+html.dark #updates,
+html.dark #aboutme,
+html.dark #photos,
+html.dark #settings {
 	background-color: #1E1E1E;
 	border-left: 5px solid #0EE842;
 }
 body, #updates, #aboutme, #photos, #settings {
 	transition: background-color 0.3s, color 0.3s;
+}
+.social-icon{
+	color: black;
+	transition: color 0.3s ease;
+}
+html.dark .social-icon {
+	color: white
 }
