@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="darkmode.js"></script>
-
+	<script>
+		const savedTheme = localStorage.getItem('theme');
+		if (savedTheme) {
+			document.documentElement.classList.add(savedTheme);
+		}
+	</script>
 	<link rel="stylesheet" href="style.css">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,6 +25,14 @@
 	</header>
 	<section>
 		<h2>Updates/timeline</h2>
+		<article id="updates">
+			<h3>Fourth Update: 3/4/26...</h3>
+			<p>I have added lots of css, small improvements and features, one of which being a working dark mode! well... semi-working at least. if you go to settings and check the dark mode toggle, dark mode will be enabled. only on the other pages though... I honestly don't know why it doesn't work and so I don't know what to do to fix it... i wanted to go ahead and release the other improvements though so for now, we have a semi-working dark mode. more updates are underway, hopefully being released soon.</p>
+			<a href="images/random/screenshot4.png" target="_blank"><img src="images/random/screenshot4.png" width="200"></a>
+			<a href="images/random/screenshot5.png" target="_blank"><img src="images/random/screenshot5.png" width="200"></a>
+			<a href="images/random/screenshot6.png" target="_blank"><img src="images/random/screenshot6.png" width="200"></a>
+			<a href="images/random/screenshot7.png" target="_blank"><img src="images/random/screenshot7.png" width="200"></a>
+		</article>
 		<article id="updates">
 			<h3>Third Update: 2/12/26...</h3>
 			<p>The barebones version of the site is now live! more features are under development and will be added soon! note: at the time of this post, the "settings" tab appears but the HTML file is blank.</p>
@@ -55,6 +67,7 @@
 			</a>
  		</p>
 	</footer>
+<script src="darkmode.js"></script>
 </body>
 </html>
 
