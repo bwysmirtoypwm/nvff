@@ -80,3 +80,6 @@ body, #updates, #aboutme, #photos, #settings {
 html.dark .social-icon {
 	color: white
 }
+a {
+	text-decoration: none;
+}
