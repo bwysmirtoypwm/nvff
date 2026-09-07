@@ -15,7 +15,8 @@
 	<a href="aboutme.html">About Me</a>
 	<a href="photography.html">Pictures</a>
 	<a href="settings.html">Settings</a>
-	<a href="html-files/tools.html">Tools</a>
+	<a href="tools.html">Tools</a>
+	
 	<header>
 		<h1>Settings!</h1>
 	</header>
@@ -25,18 +26,22 @@
 			<input type="checkbox" id="dark-mode-toggle">
 		</label>
 	</section>
+
 <script>
-const body = document.body;
-const darkToggle = document.getElementById('dark-mode-toggle');
+const root = document.documentElement;
 const savedTheme = localStorage.getItem('theme') || 'light';
-body.classList.add(savedTheme);
-darkToggle.checked = savedTheme === 'dark';
-darkToggle.addEventListener('change', () => {
-	body.classList.remove('light', 'dark');
-	const theme = darkToggle.checked ? 'dark' : 'light';
-	body.classList.add(theme);
-	localStorage.setItem('theme', theme);
-});
+root.classList.add(savedTheme);
+
+const darkToggle = document.getElementById('dark-mode-toggle');
+if (darkToggle) {
+	darkToggle.checked = savedTheme === 'dark';
+	darkToggle.addEventListener('change', () => {
+		root.classList.remove('light', 'dark');
+		const theme = darkToggle.checked ? 'dark' : 'light';
+		root.classList.add(theme);
+		localStorage.setItem('theme', theme);
+	});
+}
 </script>
 
 </body>
