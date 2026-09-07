@@ -1,3 +1,8 @@
+const darkToggle = document.getElementById('dark-mode-toggle');
+if (darkToggle) {
+	darkToggle.checked = savedTheme === 'dark';
+
+}
 const body = document.body;
 const savedTheme = localStorage.getItem('theme') || 'light';
 body.classList.add(savedTheme);
