@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script>
+		const savedTheme = localStorage.getItem('theme');
+		if (savedTheme) {
+			document.documentElement.classList.add(savedTheme);
+		}
+	</script>
+	<link rel="stylesheet" href="../../style.css">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+	<title>Jack's Website - Music Player!</title>
+    <style>
+        #music-player {
+            border-left: 5px solid #0EE842;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #CFCFCF;
+            margin: 30px 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        html.dark #music-player {
+            background-color: #1E1E1E;
+        }
+        #music-player input[type="file"] { margin-bottom: 15px; }
+        #audioElement { width: 100%; margin-top: 10px; }
+        .controls { display: flex; gap: 10px; margin: 15px 0; }
+        .controls button {
+            font-family: 'Nunito', sans-serif;
+            background-color: #0EE842;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #playlist {
+            list-style: none;
+            padding: 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        #playlist li {
+            padding: 5px 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #playlist li:hover { background-color: rgba(0,0,0,0.1); }
+        html.dark #playlist li:hover { background-color: rgba(255,255,255,0.1); }
+        #playlist li.active { font-weight: bold; color: #0EE842; }
+    </style>
+</head>
+<body>
+<div id="sidemenu">
+	<a href="../../index.html">Home</a>
+	<a href="../aboutme.html">About Me</a>
+	<a href="../photography.html">Pictures</a>
+	<a href="../settings.html">Settings</a>
+	<a href="../tools.html">Tools</a>
+</div>
+
+<header>
+    <h1>Music Player!</h1>
+</header>
+
+<section id="music-player">
+    <p>Select a folder!:</p>
+    <input type="file" id="folderInput" webkitdirectory directory multiple>
+    <audio id="audioElement" controls></audio>
+    <div class="controls">
+        <button id="prevBtn">Prev</button>
+        <button id="nextBtn">Next</button>
+        <button id="shuffleBtn">Shuffle: Off</button>
+    </div>
+    <ul id="playlist"></ul>
+</section>
+
+<footer>
+    <h3>Some socials!</h3>
+    <p>
+        <a href="https://github.com/bwysmirtoypwm" target="_blank"><img src="../../images/social-icons/github.svg" width="40"></a>
+        <a href="https://www.youtube.com/@nvf.v" target="_blank"><img src="../../images/social-icons/youtube.svg" width="40"></a>
+        <a href="https://open.spotify.com/user/312tzibntiimhsxkcze7uaqykm3e" target="_blank"><img src="../../images/social-icons/spotify.svg" width="40"></a>
+        <a href="https://vrchat.com/home/user/usr_d130e8f3-3bb1-44ef-868c-6b61ceef7abd" target="_blank"><img src="../../images/social-icons/vrchat.svg" width="40"></a>
+    </p>
+</footer>
+
+<script src="../darkmode.js"></script>
+<script>
+    const folderInput = document.getElementById('folderInput');
+    const audioElement = document.getElementById('audioElement');
+    const playlistElement = document.getElementById('playlist');
+    let audioFiles = [], currentIndex = 0, isShuffled = false, shuffleIndices = [], shufflePos = 0;
+
+    folderInput.addEventListener('change', (e) => {
+        audioFiles = Array.from(e.target.files).filter(f => f.type.startsWith('audio/') || /\.(mp3|wav|ogg|flac|m4a)$/i.test(f.name));
+        audioFiles.sort((a, b) => a.name.localeCompare(b.name));
+        if (audioFiles.length > 0) {
+            buildPlaylist();
+            if (isShuffled) generateShuffleOrder();
+            loadTrack(isShuffled ? shuffleIndices[0] : 0);
+            audioElement.play();
+        }
+    });
+
+    function buildPlaylist() {
+        playlistElement.innerHTML = '';
+        audioFiles.forEach((file, index) => {
+            const li = document.createElement('li');
+            
+            const lastDotIndex = file.name.lastIndexOf('.');
+            li.textContent = lastDotIndex !== -1 ? file.name.substring(0, lastDotIndex) : file.name;
+            
+            li.onclick = () => { 
+                currentIndex = index; 
+                if (isShuffled) {
+                    shufflePos = shuffleIndices.indexOf(currentIndex);
+                }
+                loadTrack(currentIndex); 
+                audioElement.play(); 
+            };
+            playlistElement.appendChild(li);
+        });
+    }
+
+    function loadTrack(index) {
+        currentIndex = index;
+        audioElement.src = URL.createObjectURL(audioFiles[index]);
+        Array.from(playlistElement.children).forEach((li, i) => {
+            if (i === currentIndex) {
+                li.classList.add('active');
+                li.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                li.classList.remove('active');
+            }
+        });
+    }
+
+    function generateShuffleOrder() {
+        shuffleIndices = audioFiles.map((_, i) => i);
+        for (let i = shuffleIndices.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffleIndices[i], shuffleIndices[j]] = [shuffleIndices[j], shuffleIndices[i]];
+        }
+        shufflePos = shuffleIndices.indexOf(currentIndex);
+        if (shufflePos === -1) shufflePos = 0;
+    }
+
+    document.getElementById('nextBtn').onclick = () => {
+        if (audioFiles.length === 0) return;
+        if (isShuffled) {
+            shufflePos++;
+            if (shufflePos >= shuffleIndices.length) {
+                generateShuffleOrder(); 
+                shufflePos = 0;
+            }
+            currentIndex = shuffleIndices[shufflePos];
+        } else {
+            currentIndex = (currentIndex + 1) % audioFiles.length; 
+        }
+        loadTrack(currentIndex);
+        audioElement.play();
+    };
+
+    document.getElementById('prevBtn').onclick = () => {
+        if (audioFiles.length === 0) return;
+        if (isShuffled) {
+            shufflePos--;
+            if (shufflePos < 0) {
+                shufflePos = shuffleIndices.length - 1;
+            }
+            currentIndex = shuffleIndices[shufflePos];
+        } else {
+            currentIndex = (currentIndex - 1 + audioFiles.length) % audioFiles.length;
+        }
+        loadTrack(currentIndex);
+        audioElement.play();
+    };
+
+    document.getElementById('shuffleBtn').onclick = (e) => {
+        isShuffled = !isShuffled;
+        if (isShuffled) {
+            e.target.textContent = "Shuffle: On";
+            generateShuffleOrder();
+        } else {
+            e.target.textContent = "Shuffle: Off";
+        }
+    };
+
+    audioElement.onended = () => {
+        document.getElementById('nextBtn').click();
+    };
+</script>
+</body>
+</html>
